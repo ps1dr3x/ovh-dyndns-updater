@@ -19,21 +19,21 @@ IPV6_CURRENT=$(curl -6 -s https://api64.ipify.org)
 UPDATE_RESULT=""
 
 if [[ "$IPV4_DNS" == "" || "$IPV4_CURRENT" == "" ]]; then
-    UPDATE_RESULT+="Got an empty response for IPV4_DNS and/or IPV4_CURRENT (IPV4_DNS: $IPV4_DNS IPV4_CURRENT: $IPV4_CURRENT). Skipping IPv4 update.\n"
+    UPDATE_RESULT+="Empty response for IPV4_DNS and/or IPV4_CURRENT (IPV4_DNS: $IPV4_DNS IPV4_CURRENT: $IPV4_CURRENT), IPv4 update skipped. "
 elif [[ "$IPV4_DNS" != "$IPV4_CURRENT" ]]; then
-    UPDATE_RESULT+="Found a different IPv4. IPV4_DNS: $IPV4_DNS IPV4_CURRENT: $IPV4_CURRENT. Updating IPv4 DNS...\n"
-    UPDATE_RESULT+=$(curl -s "https://dns.eu.ovhapis.com/nic/update?system=dyndns&hostname=$DOMAIN&myip=$IPV4_CURRENT" -u "$USERNAME:$PASSWORD")"\n"
+    UPDATE_RESULT+="Found a different IPv4. IPV4_DNS: $IPV4_DNS IPV4_CURRENT: $IPV4_CURRENT. "
+    UPDATE_RESULT+="DNS update request's result: "$(curl -s "https://dns.eu.ovhapis.com/nic/update?system=dyndns&hostname=$DOMAIN&myip=$IPV4_CURRENT" -u "$USERNAME:$PASSWORD")" "
 else
-    UPDATE_RESULT+="IPv4 is already up to date.\n"
+    UPDATE_RESULT+="IPv4 is already up to date. "
 fi
 
 if [[ "$IPV6_DNS" == "" || "$IPV6_CURRENT" == "" ]]; then
-    UPDATE_RESULT+="Got an empty response for IPV6_DNS and/or IPV6_CURRENT (IPV6_DNS: $IPV6_DNS IPV6_CURRENT: $IPV6_CURRENT). Skipping IPv6 update.\n"
+    UPDATE_RESULT+="Empty response for IPV6_DNS and/or IPV6_CURRENT (IPV6_DNS: $IPV6_DNS IPV6_CURRENT: $IPV6_CURRENT), IPv6 update skipped. "
 elif [[ "$IPV6_DNS" != "$IPV6_CURRENT" ]]; then
-    UPDATE_RESULT+="Found a different IPv6. IPV6_DNS: $IPV6_DNS IPV6_CURRENT: $IPV6_CURRENT. Updating IPv6 DNS...\n"
-    UPDATE_RESULT+=$(curl -s "https://dns.eu.ovhapis.com/nic/update?system=dyndns&hostname=$DOMAIN&myip=$IPV6_CURRENT" -u "$USERNAME:$PASSWORD")"\n"
+    UPDATE_RESULT+="Found a different IPv6. IPV6_DNS: $IPV6_DNS IPV6_CURRENT: $IPV6_CURRENT. "
+    UPDATE_RESULT+="DNS update request's result: "$(curl -s "https://dns.eu.ovhapis.com/nic/update?system=dyndns&hostname=$DOMAIN&myip=$IPV6_CURRENT" -u "$USERNAME:$PASSWORD")""
 else
-    UPDATE_RESULT+="IPv6 is already up to date.\n"
+    UPDATE_RESULT+="IPv6 is already up to date."
 fi
 
 echo "$LOG_TIMESTAMP: UPDATE_RESULT: $UPDATE_RESULT" >> "$LOG_FILE"
