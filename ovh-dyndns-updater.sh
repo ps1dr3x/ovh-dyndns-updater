@@ -7,7 +7,7 @@ DOMAIN=""
 USERNAME=""
 PASSWORD=""
 
-LOG_FILE="/var/log/update-dyndns-ovh.log"
+LOG_FILE="/var/log/ovh-dyndns-updater.log"
 LOG_TIMESTAMP=$(date +%s)
 
 IPV4_DNS=$(dig +short A $DOMAIN)
