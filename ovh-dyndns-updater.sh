@@ -8,7 +8,7 @@ USERNAME=""
 PASSWORD=""
 
 LOG_FILE="/var/log/ovh-dyndns-updater.log"
-LOG_TIMESTAMP=$(date +%s)
+NOW=$(date "+%d-%m-%y_%H:%M:%S")
 
 IPV4_DNS=$(dig +short A $DOMAIN)
 IPV6_DNS=$(dig +short AAAA $DOMAIN)
@@ -36,4 +36,4 @@ else
     UPDATE_RESULT+="IPv6 is already up to date."
 fi
 
-echo "$LOG_TIMESTAMP: UPDATE_RESULT: $UPDATE_RESULT" >> "$LOG_FILE"
+echo "$NOW: UPDATE_RESULT: $UPDATE_RESULT" >> "$LOG_FILE"
